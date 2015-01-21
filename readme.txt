@@ -20,10 +20,6 @@ as well as know what sentiment they are portraying with their post titles and co
 Add this plugin by uploading the zip using the "Add Plugin" feature built into Wordpress.  Otherwise manaully unzip the folder
 and upload the entire directory to your blog's plugins folder ( /wp-content/plugins/ ).  Next you have to activate the plugin.
 
-Lastly, to make it work you need to go to the Hercules Recaptcha settings page (a submenu of "Settings") and add your
-site key and and secret key.  If you don't have these yet you need to go to https://www.google.com/recaptcha/ to register your site
-and get keys.
-
 == Frequently Asked Questions ==
 
 = Where do I see the sentiment? =
