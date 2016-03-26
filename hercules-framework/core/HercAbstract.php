@@ -119,8 +119,6 @@ abstract class HercAbstract
                 break;
         }
 
-        require_once( $file );
-
         if( !property_exists( $this, 'plugin_directory' ) && property_exists( $this, 'directory' ) )
             $this->plugin_directory = dirname( dirname( $this->directory ) );
 
