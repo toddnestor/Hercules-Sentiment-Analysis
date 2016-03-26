@@ -177,6 +177,16 @@ abstract class HercAbstract
     }
 
 	/**
+	 * Returns the path to the Hercules Framework.
+	 *
+	 * @return string path to the framework parent folder.
+	 */
+	function GetFrameworkDirectory()
+	{
+		return dirname( dirname( __FILE__ ) );
+	}
+
+	/**
 	 * Returns the folder name for the plugin folder for this plugin.
 	 *
 	 * @return string folder name for this plugin.
@@ -188,6 +198,19 @@ abstract class HercAbstract
 
         return array_pop( $folder_bits );
     }
+
+	/**
+	 * Returns the folder name for the framework folder.
+	 *
+	 * @return string folder name for this framework.
+	 */
+	function GetFrameworkFolderName()
+	{
+		$plugin_folder = $this->GetFrameworkDirectory();
+		$folder_bits = explode( DIRECTORY_SEPARATOR, $plugin_folder );
+
+		return array_pop( $folder_bits );
+	}
 
 	/**
 	 * Returns the current page url based on / instead of having the domain.

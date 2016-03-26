@@ -5,7 +5,7 @@
 			<div class="well" style="padding-bottom: 75px;">
 				{{#if updated}}
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-12">
 						<div class="alert alert-success" role="alert"><strong>Success!</strong> Your settings were updated!</div>
 					</div>
 				</div>
