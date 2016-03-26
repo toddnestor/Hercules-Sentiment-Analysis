@@ -13,9 +13,9 @@ class HercModel_SentimentAnalysis extends Model
 	}
 
 	/**
-	 * Approves all positive comments, and marks comments as having been processed so we don't process the same comments multiple times.
+	 * Processes comments based on settings.  Auto approves positive comments if that setting is set, unapproves negative comments if that setting is set.
 	 */
-	public function ApprovePositiveComments()
+	public function HandleComments()
 	{
 		$comments = get_comments( array( 'status' => 'hold', 'meta_query' => array( array( 'key' => 'sentiment-checked', 'compare' => 'NOT EXISTS' ) ) ) );
 
@@ -44,6 +44,6 @@ class HercModel_SentimentAnalysis extends Model
 		parent::Initialize();
 
 		if( $this->Model('settings')->GetOption('auto_approve_positive_comments') == 'yes' || $this->Model('settings')->GetOption('auto_unapprove_negative_comments') == 'yes' )
-			add_action( 'init', array( $this, 'ApprovePositiveComments' ) );
+			add_action( 'init', array( $this, 'HandleComments' ) );
 	}
 }

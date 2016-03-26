@@ -18,6 +18,15 @@ class View extends HercAbstract
 			$this->AddToData( array( 'updated' => true ) );
     }
 
+	/**
+	 * This is the core view function, it actually renders stuff to the page using the Handlebars template engine.
+	 *
+	 * This will also add the class name to all form inputs so that form data is an array of data based on the current class name.
+	 *
+	 * @param array $data data to be used when rendering.
+	 * @param bool|false $return If set to true then it will return the html for rendering rather than echoing it out.
+	 * @return null|string no return value if $return is set to false, otherwise the html string that is created during rendering.
+	 */
     function Render( $data = array(), $return = false )
     {
         if( !is_bool( $return ) )
@@ -72,6 +81,11 @@ class View extends HercAbstract
         }
     }
 
+	/**
+	 * Creates the name attribute for form inputs based on the current class.
+	 * @param $matches array of matches provided by a preg_replace_callback function
+	 * @return string name attribute with the classname[] thrown around the original name.
+	 */
     function AddClassNameToPostNames( $matches )
     {
         if( $this->Model( $this->CurrentSlug() ) )
@@ -90,6 +104,9 @@ class View extends HercAbstract
 		wp_register_script( $style, $handle, $dependencies );
 	}
 
+	/**
+	 * Registers all scripts for the current view.
+	 */
 	function RegisterAllScripts()
 	{
 		if( is_dir( $this->directory . DIRECTORY_SEPARATOR . 'js' ) )
@@ -123,17 +140,26 @@ class View extends HercAbstract
 		wp_register_style( $handle, $style, array() );
 	}
 
+	/**
+	 * Enqueues bootstrap which only works inside of .herc-bootstrap sections so that we don't interfere with other styles.
+	 */
     function EnqueueBootstrap()
     {
         $this->EnqueueStyleSheet( 'assets/css/bootstrap.css', sanitize_title( $this->GetPluginFolderName() . '_bootstrap' ) );
     }
 
+	/**
+	 * Registers the enqueue bootstrap function so it enqueues in the admin area and the public side.
+	 */
     function IncludeBootstrap()
     {
         add_action( 'wp_enqueue_scripts', array( $this, 'EnqueueBootstrap' ) );
         add_action( 'admin_print_styles', array( $this, 'EnqueueBootstrap' ) );
     }
 
+	/**
+	 * Registers metaboxes to be rendered on post edit screens.
+	 */
     function RegisterMetaboxes()
     {
 		$slug = property_exists( $this, 'model' ) && !empty( $this->model ) ? $this->Model( $this->model )->CurrentSlug() : $this->CurrentSlug();
@@ -153,6 +179,11 @@ class View extends HercAbstract
         }
     }
 
+	/**
+	 * Adds the view to the post content if it is a post add on.
+	 * @param $content post content provided by WP.
+	 * @return string the new post content with the view added on.
+	 */
     function PostFilter( $content )
     {
 		global $post;
@@ -168,6 +199,9 @@ class View extends HercAbstract
             return $content . $html;
     }
 
+	/**
+	 * Generates data to be used when rendering.
+	 */
     function GenerateData()
     {
         if( is_object( $this->Model( $this->model ) ) )
@@ -204,6 +238,9 @@ class View extends HercAbstract
         $this->posts_data_generated = true;
     }
 
+	/**
+	 * Registers an options page if this is an options page view.
+	 */
     function AddOptionsPage()
     {
         add_options_page(
@@ -214,6 +251,11 @@ class View extends HercAbstract
         );
     }
 
+	/**
+	 * Adds columns to the posts lists tables if applicable for this view.
+	 * @param $columns WP provided array of columns already being rendered.
+	 * @return array columns array with our new columns added on.
+	 */
     function AddPostColumns( $columns )
     {
         $new_columns = $this->PostsColumns();
@@ -221,6 +263,11 @@ class View extends HercAbstract
         return array_merge( $columns, $new_columns );
     }
 
+	/**
+	 * Adds columns to the comments list table if applicable for this view.
+	 * @param $columns WP provided array of columns already being rendered.
+	 * @return array columns array with our new columns added on.
+	 */
 	function AddCommentColumns( $columns )
 	{
 		$new_columns = $this->CommentsColumns();
@@ -228,6 +275,12 @@ class View extends HercAbstract
 		return array_merge( $columns, $new_columns );
 	}
 
+	/**
+	 * Calculates the value for the current custom column if applicable.
+	 *
+	 * @param $colname name of the column currently being rendered.
+	 * @param $post_id id of the post that is being rendered.
+	 */
     function PostColumnValues( $colname, $post_id )
     {
 		$slug = property_exists( $this, 'model' ) && !empty( $this->model ) ? $this->Model( $this->model )->CurrentSlug() : $this->CurrentSlug();
@@ -252,6 +305,12 @@ class View extends HercAbstract
         }
     }
 
+	/**
+	 * Calculates the value for the current custom column if applicable.
+	 *
+	 * @param $colname name of the column currently being rendered.
+	 * @param $post_id id of the comment that is being rendered.
+	 */
 	function CommentColumnValues( $colname, $post_id )
 	{
 		$slug = property_exists( $this, 'model' ) && !empty( $this->model ) ? $this->Model( $this->model )->CurrentSlug() : $this->CurrentSlug();
@@ -277,6 +336,9 @@ class View extends HercAbstract
 		}
 	}
 
+	/**
+	 * Adds an admin page to WP if this is an admin page view.
+	 */
 	function AddAdminPage()
 	{
 		add_menu_page(
@@ -290,11 +352,19 @@ class View extends HercAbstract
 		);
 	}
 
+	/**
+	 * Registers a short code to be used in WP.
+	 * @param array $attributes provided by WP, it is the attributes added to the shortcode.
+	 * @return string HTML string of the rendered view.
+	 */
 	public function RegisterShortcode( $attributes = array() )
 	{
 		return $this->Render( $attributes, true );
 	}
 
+	/**
+	 * Handles all the code that needs to be handled each time WP is initialized.
+	 */
     function Initialize()
     {
         if( $this->type == 'metabox' && !empty( $this->metabox_positions ) )
@@ -338,6 +408,11 @@ class View extends HercAbstract
 		}
     }
 
+	/**
+	 * Handles adding columns and functions to process values for those columns to post list tables.
+	 *
+	 * @param $post_type string of the post type to process actions for.
+	 */
 	function RegisterPostColumn( $post_type )
 	{
 		switch( $post_type )

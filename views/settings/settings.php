@@ -13,6 +13,7 @@ class HercView_Settings extends View
 		$this->icon 	  = 'dashicons-format-status';
 		$this->priority   = 5;
 
+		//Bootstrap makes things awesome!
 		$this->IncludeBootstrap();
 
 		parent::__construct();

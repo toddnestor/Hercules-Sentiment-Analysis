@@ -51,11 +51,21 @@ abstract class HercAbstract
         return $this->InitiateClass( 'view', $view, $new );
     }
 
+	/**
+	 * Turns a string into Upper Camelcase.
+	 * @param $string string to upper cammel case.
+	 * @return string upper camel-cased version of input string.
+	 */
     function UpperCamelCaseIt( $string )
     {
         return str_replace( ' ', '', ucwords( str_replace( array( '_', '-' ), ' ', $string ) ) );
     }
 
+	/**
+	 * Turns an upper camel-cased string into a slug with lowercase letters and hyphens for word splits.
+	 * @param $string Upper camel-cased string to turn into a slug.
+	 * @return string slugified version of the upper camel case input string.
+	 */
     function SlugifyCamelCase( $string )
     {
         $chars = str_split( $string );
@@ -69,6 +79,11 @@ abstract class HercAbstract
         return trim( implode( '', $chars ), '-' );
     }
 
+	/**
+	 * Takes a class name from a class that uses this framework and turns it into a slug.
+	 * @param $string Class name that is of the type HercView_something, HercModel_something, HercController_something, or HercHelper_something.
+	 * @return bool|string slugified version of the class name if there was one, otherwise returns false.
+	 */
     function SlugFromClassName( $string )
     {
         $bits = explode( '_', $string );
@@ -79,6 +94,11 @@ abstract class HercAbstract
         return false;
     }
 
+	/**
+	 * Returns the slug for the current class instance.
+	 *
+	 * @return bool|string Slugified version of the class name if it knows the class, otherwise false.
+	 */
     function CurrentSlug()
     {
         return $this->SlugFromClassName( $this->class_name );
@@ -136,16 +156,31 @@ abstract class HercAbstract
         return $this->$object;
     }
 
+	/**
+	 * Returns the url to a specific file.
+	 * @param string $file
+	 * @return string url to the file supplied.
+	 */
     function GetUrl( $file = '' )
     {
         return plugins_url( $this->GetPluginFolderName() . '/' . $file, $this->GetPluginDirectory() );
     }
 
+	/**
+	 * Returns the path to the main plugin folder for this plugin.
+	 *
+	 * @return string path to the plugin folder.
+	 */
     function GetPluginDirectory()
     {
-        return dirname( dirname( __FILE__ ) );
+        return dirname( dirname( dirname( __FILE__ ) ) );
     }
 
+	/**
+	 * Returns the folder name for the plugin folder for this plugin.
+	 *
+	 * @return string folder name for this plugin.
+	 */
     function GetPluginFolderName()
     {
         $plugin_folder = $this->GetPluginDirectory();
@@ -154,6 +189,10 @@ abstract class HercAbstract
         return array_pop( $folder_bits );
     }
 
+	/**
+	 * Returns the current page url based on / instead of having the domain.
+	 * @return string
+	 */
 	function GetCurrentPage()
 	{
 		$current_page = $_SERVER['PHP_SELF'];
@@ -171,6 +210,11 @@ abstract class HercAbstract
 		return $current_page;
 	}
 
+	/**
+	 * Adds data to the data array if it existed, otherwise makes a new data array from the input value.
+	 *
+	 * @param array $data array of data to add to the current data array.
+	 */
 	function AddToData( $data )
 	{
 		if( empty( $this->data ) )
@@ -179,6 +223,7 @@ abstract class HercAbstract
 		if( !is_array( $this->data ) )
 			$this->data = array( $this->data );
 
-		$this->data = array_merge( $this->data, $data );
+		if( is_array( $this->data ) && is_array( $data ) && !empty( $data ) )
+			$this->data = array_merge( $this->data, $data );
 	}
 }

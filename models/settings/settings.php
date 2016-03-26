@@ -8,6 +8,7 @@ class HercModel_Settings extends Model
     {
         $this->class_name = __CLASS__;
         $this->directory = dirname( __FILE__ );
+		$this->has_options = true;
 
         parent::__construct();
     }
