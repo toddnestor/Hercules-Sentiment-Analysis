@@ -99,22 +99,18 @@ abstract class HercAbstract
         {
             case 'helper':
                 $folder = 'helpers';
-                $file = 'helper.php';
                 $class_prefix = 'Helper';
                 break;
             case 'model':
                 $folder = 'models';
-                $file = 'model.php';
                 $class_prefix = 'Model';
                 break;
             case 'controller':
                 $folder = 'controllers';
-                $file = 'controller.php';
                 $class_prefix = 'Controller';
                 break;
             case 'view':
                 $folder = 'views';
-                $file = 'view.php';
                 $class_prefix = 'View';
                 break;
         }
