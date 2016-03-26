@@ -172,7 +172,7 @@ class View extends HercAbstract
     {
         if( is_object( $this->Model( $this->model ) ) )
         {
-			if( $this->type == 'options_page' )
+			if( $this->type == 'options_page' || $this->type == 'admin_page' )
 			{
 				$this->AddToData( $this->Model( $this->model )->GetOptions() );
 			}

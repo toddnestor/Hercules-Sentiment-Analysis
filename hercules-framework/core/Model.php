@@ -36,7 +36,7 @@ class Model extends HercAbstract
 		$options = $this->GetOptions();
 
 		if( is_array( $options ) )
-			return $options[ $key ];
+			return !empty( $options[ $key ] ) ? $options[ $key ] : false;
 		else
 			return $options;
 	}
