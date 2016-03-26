@@ -12,7 +12,7 @@ Hercules Sentiment Analysis adds columns to the comments and posts tables that s
 == Description ==
 
 **UPDATE**
-Now you can set an option in the new settings page (seen on the Settings dropdown menu) to auto-approve positive comments.
+Now you can set an option in the new settings page (titled "Herc Sentiment" in the admin bar) to auto-approve positive comments, or un-approve negative comments.
 
 Hercules Sentiment Analysis uses PHP Insight (https://github.com/JWHennessey/phpInsight) to determine whether comments, posts, and post titles
 are positive, negative, or neutral.  This will help bloggers respond to readers who have concerns faster (or delete negative comments if necessary),
