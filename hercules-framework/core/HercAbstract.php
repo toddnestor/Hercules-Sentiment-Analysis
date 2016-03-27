@@ -141,11 +141,17 @@ abstract class HercAbstract
         if( property_exists( $this, 'plugin_directory' ) && file_exists( $this->plugin_directory . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $class . DIRECTORY_SEPARATOR . $class . '.php' ) )
             require_once( $this->plugin_directory . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $class . DIRECTORY_SEPARATOR . $class . '.php' );
         elseif( file_exists( dirname( dirname( __FILE__ ) ) . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $class . DIRECTORY_SEPARATOR . $class . '.php' ) )
-            require_once( dirname( dirname( __FILE__ ) ) . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $class . DIRECTORY_SEPARATOR . $class . '.php' );
+		{
+			require_once( dirname( dirname( __FILE__ ) ) . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $class . DIRECTORY_SEPARATOR . $class . '.php' );
+			$framework_object = true;
+		}
         else
             return false;
 
-        $object = 'Herc' . $class_prefix . '_' . $this->UpperCamelCaseIt( $class );
+		if( empty( $framework_object ) )
+        	$object = 'Herc' . $class_prefix . '_' . $this->UpperCamelCaseIt( $class );
+		else
+			$object = 'Hercules\\' . $class_prefix . '\\' . $this->UpperCamelCaseIt( $class );
 
         if( $new )
             return new $object;

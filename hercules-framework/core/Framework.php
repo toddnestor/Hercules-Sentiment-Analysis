@@ -26,7 +26,7 @@ class Framework extends HercAbstract
         {
             $directories = array(
                 dirname( dirname( __FILE__ ) ) . DIRECTORY_SEPARATOR . $val . 's',
-				dirname( dirname( dirname( __FILE__ ) ) ) . DIRECTORY_SEPARATOR . $val . 's'
+				$this->plugin_directory . DIRECTORY_SEPARATOR . $val . 's'
             );
 
             foreach( $directories as $key2=>$val2 )

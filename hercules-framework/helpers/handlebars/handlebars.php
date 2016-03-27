@@ -1,23 +1,17 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Todd
- * Date: 7/21/2015
- * Time: 6:00 PM
- */
+<?php namespace Hercules\Helper;
 
 if( !class_exists( 'Handlebars\\Autoloader' ) )
 {
 	require_once( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Handlebars' . DIRECTORY_SEPARATOR . 'Autoloader.php' );
 
-	Handlebars\Autoloader::register();
+	\Handlebars\Autoloader::register();
 }
 
-use Handlebars\Handlebars;
+use Handlebars\Handlebars as HandlebarsSrc;
 
 use Hercules\Helper;
 
-class HercHelper_Handlebars extends Helper
+class Handlebars extends Helper
 {
     function __construct()
     {
@@ -36,7 +30,7 @@ class HercHelper_Handlebars extends Helper
     {
         if( empty( $this->handlebars_object ) )
         {
-            $this->handlebars_object = new Handlebars;
+            $this->handlebars_object = new HandlebarsSrc;
         }
 
         return $this->handlebars_object;

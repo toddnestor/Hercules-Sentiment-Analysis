@@ -1,8 +1,8 @@
-<?php
+<?php namespace Hercules\Helper;
 
 use Hercules\Helper;
 
-class HercHelper_Tools extends Helper
+class Tools extends Helper
 {
     function __construct()
     {
