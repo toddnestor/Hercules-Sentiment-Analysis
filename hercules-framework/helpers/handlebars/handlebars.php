@@ -6,9 +6,12 @@
  * Time: 6:00 PM
  */
 
-require_once( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Handlebars' . DIRECTORY_SEPARATOR . 'Autoloader.php' );
+if( !class_exists( 'Handlebars\\Autoloader' ) )
+{
+	require_once( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Handlebars' . DIRECTORY_SEPARATOR . 'Autoloader.php' );
 
-Handlebars\Autoloader::register();
+	Handlebars\Autoloader::register();
+}
 
 use Handlebars\Handlebars;
 
