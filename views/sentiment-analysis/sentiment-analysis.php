@@ -15,7 +15,7 @@ class HercView_SentimentAnalysis extends View
         $this->class_name        = __CLASS__;
 
 		//Defines what post types the sentiment columns will be added to.
-		$this->post_type = ['all'];
+		$this->post_type = array('all');
 
 		$this->sentiments = array(
 			'neu'   => 'Neutral',
